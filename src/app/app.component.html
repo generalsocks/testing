@@ -1,0 +1,78 @@
+
+
+
+<div class="container mt-5">
+  <H2>Features</H2>
+  <ul>
+    <li>✅ Angular App </li>
+    <li>✅ Uses a Service worker for robust caching</li>
+    <li>✅ Local PouchD (in browser IndexedDB)</li>
+    <li>❌ CouchDB (to sync to)</li>
+    <li>✅ Online / Offline indicator</li>
+    <li>✅ Bootstrap CSS</li>
+    <li>✅ Sweet Alert (this beautifies alert popups)</li>
+    <li>✅ Example Clinician dropdown working offline (Fetch API cached)</li>
+  </ul>
+
+  <h2>Momentum Health Solutions</h2>
+  <h4>Perigon Away - Offline Proof of Concept</h4><br>
+
+  <form id="myForm">
+      <div class="form-group">
+
+          <label for="selClinicians">Clinician</label> &nbsp; 
+          <select id="selClinicians" style="width: 180px">
+              <option value="0">None loaded</option>
+          </select>  &nbsp;  &nbsp; 
+          <input type='button' class="btn btn-success btn-sm" value='test Fetch API' (click)='FetchAPI()'> &nbsp; 
+          <input type='button' class="btn btn-warning btn-sm" value='clear' (click)='clearClinician()'> &nbsp;
+      </div>
+
+      <!-- Name input -->
+      <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name">
+      </div>
+      <!-- Email input -->
+      <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      </div>
+      <!-- Sex input (radio buttons) -->
+      <div class="form-group">
+          <label>Gender</label>
+          <div class="form-check">
+              <input type="radio" class="form-check-input" name="sex" value="male">
+              <label class="form-check-label">Male</label>
+          </div>
+          <div class="form-check">
+              <input type="radio" class="form-check-input" name="sex" value="female">
+              <label class="form-check-label">Female</label>
+          </div>
+      </div>
+      <!-- Age input -->
+      <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" class="form-control" id="age" placeholder="Enter your age">
+      </div>
+      <!-- Notes textarea -->
+      <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea class="form-control" id="notes" rows="4" placeholder="Enter any additional notes"></textarea>
+      </div>
+      <!-- Submit button -->
+<table><tr><td>
+<input type='button' class="btn btn-primary" value='Save' (click)='Save()'> 
+&nbsp; 
+<input type="button" class="btn btn-primary" style='width:120px' value='Test Alert' (click)="TestSwal()">  
+&nbsp; <!-- <input type='button' class="btn btn-secondary" style='width:50px' value='Sync' onclick="sync()"> --> </td>
+<td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td><td>
+<img id="onlineImage" src="assets/online-image.jpg" alt="Online Image">
+<img id="offlineImage" src="assets/offline-image.jpg" alt="Offline Image">
+</td></tr></table>
+<br><br><br><br><br>
+  </form>
+</div>
+
+
+<router-outlet />
