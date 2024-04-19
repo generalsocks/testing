@@ -23,44 +23,47 @@
           <label for="selClinicians">Clinician</label> &nbsp; 
           <select id="selClinicians" style="width: 180px">
               <option value="0">None loaded</option>
+              <!-- <option *ngForOf="let opt of dropDownData" value="opt.id">{{opt.cname}}</option> -->
           </select>  &nbsp;  &nbsp; 
           <input type='button' class="btn btn-success btn-sm" value='test Fetch API' (click)='FetchAPI()'> &nbsp; 
           <input type='button' class="btn btn-warning btn-sm" value='clear' (click)='clearClinician()'> &nbsp;
       </div>
 
+<form [formGroup]="userForm">
       <!-- Name input -->
       <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter your name">
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Enter your name">
       </div>
       <!-- Email input -->
       <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+          <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter your email">
       </div>
       <!-- Sex input (radio buttons) -->
       <div class="form-group">
           <label>Gender</label>
           <div class="form-check">
-              <input type="radio" class="form-check-input" name="sex" value="male">
+              <input type="radio" formControlName="gender" class="form-check-input" name="gender" value="male">
               <label class="form-check-label">Male</label>
           </div>
           <div class="form-check">
-              <input type="radio" class="form-check-input" name="sex" value="female">
+              <input type="radio" formControlName="gender" class="form-check-input" name="gender" value="female">
               <label class="form-check-label">Female</label>
           </div>
       </div>
       <!-- Age input -->
       <div class="form-group">
           <label for="age">Age</label>
-          <input type="number" class="form-control" id="age" placeholder="Enter your age">
+          <input type="number" formControlName="age" class="form-control" id="age" placeholder="Enter your age">
       </div>
       <!-- Notes textarea -->
       <div class="form-group">
           <label for="notes">Notes</label>
-          <textarea class="form-control" id="notes" rows="4" placeholder="Enter any additional notes"></textarea>
+          <textarea class="form-control" formControlName="notes" id="notes" rows="4" placeholder="Enter any additional notes"></textarea>
       </div>
       <!-- Submit button -->
+    </form>
 <table><tr><td>
 <input type='button' class="btn btn-primary" value='Save' (click)='Save()'> 
 &nbsp; 
