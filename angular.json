@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "allowedCommonJsDependencies": ["events","immediate","spark-md5","vuvuzela"],
+            "allowedCommonJsDependencies": ["events","immediate","spark-md5","vuvuzela, sweetalert"],
             "outputPath": "dist/sw_pouch_app",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -102,5 +102,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "8065d7b2-5c5e-4752-9059-af39b0211e2b"
   }
 }
