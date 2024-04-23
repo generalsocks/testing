@@ -9,6 +9,11 @@ PouchDB.plugin(PouchDBAdapterIDB);
   providedIn: 'root'
 })
 export class PouchdbService {
+  public db: PouchDB.Database
 
-  constructor() { }
-}
+  constructor() {
+    this.db = new PouchDB('my_database', { adapter: 'idb' });
+   }
+    
+  }
+

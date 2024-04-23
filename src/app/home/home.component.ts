@@ -9,6 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subscription, fromEvent, merge, of } from 'rxjs';
 
 import { AuthGuard } from '../auth.guard';
+import { NetworkService } from '../../services/network.service';
 import PouchDB from 'pouchdb';
 import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -29,41 +30,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   title = 'sw_pouch_app 3';
   datestamp = this.DateSA();
   pouchdb!: any; //PouchDB.Database;
-  networkStatus: boolean = false;
-  networkStatus$: Subscription = Subscription.EMPTY;
+  // networkStatus: boolean = false;
+  // networkStatus$: Subscription = Subscription.EMPTY;
+  
   userForm!: FormGroup;
   dropDownData!:any;
 
   constructor(private _fb: FormBuilder,
-    private _http:HttpClient
+    private _http:HttpClient, private networkService: NetworkService
   ) {
     this.pouchdb = new PouchDB('pouchform');
+    this.networkService.networkStatus.valueOf; 
   }
 
   ngOnInit(): void {
     this.CreateForm();
-    this.checkNetworkStatus();
+    this.networkService.checkNetworkStatus();
+    // this.checkNetworkStatus();
   }
 
   ngOnDestroy(): void {
-    this.networkStatus$.unsubscribe();
+    this.networkService.networkStatus$.unsubscribe();
   }
 
-  checkNetworkStatus() {
-    this.networkStatus = navigator.onLine;
-
-    this.networkStatus$ = merge(
-      of(null),
-      fromEvent(window, 'online'),
-      fromEvent(window, 'offline')
-    )
-      .pipe(map(() => navigator.onLine))
-      .subscribe((status) => {
-        console.log('status', status);
-        this.networkStatus = status;
-        this.updateImageVisibility(status);
-      });
-  }
+  
 
   //create form model
   private CreateForm() {
@@ -76,77 +66,42 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Check online/offline status
-  updateImageVisibility(status: boolean) {
-    const onlineImage = document.getElementById('onlineImage');
-    const offlineImage = document.getElementById('offlineImage');
-    if (status == true && onlineImage != null && offlineImage != null) {
-      onlineImage.style.display = 'block';
-      offlineImage.style.display = 'none';
-    } else if (status == false && onlineImage != null && offlineImage != null) {
-      onlineImage.style.display = 'none';
-      offlineImage.style.display = 'block';
-    }
-  }
-
+ 
   Save(): void {
-    //var pouchdb = new PouchDB('perigon_device123');
-    //var remoteCouch = 'http://admin:couch0surfing@localhost:5984/perigon_device123';
-    //var cookie;
-
-    /*
-    //Input validation
-    var name = document.getElementById('name')?.textContent;
-    var email = document.getElementById('email')?.value;
-    var age =  document.getElementById('age')?.value;
-    var insync = 'no';
-
-    if (name.length < 1){
-      //alert('Name not filled');
-      swal("Name not filled", "Input validation");
-      name.focus();
-      return;
-    }
-    if (email.length < 1){
-      //alert('Email invalid');
-      swal("Email not filled");
-      document.getElementById('email')?.focus();
-      return;
-    }
-    if (age.length < 1){
-      //alert('Age invalid');
-      swal("Age invalid");
-      document.getElementById('age')?.focus();
-      return;
-    }
-  
-    //End input validation
-    */
-    console.log("Saved form data");
+   console.log("Saved form data");
     const data =  this.userForm.value;
     console.log(data);
-   
-    // var perigonpouch = {
-    //   name: 'Jane', //document.getElementById('name')?.value,
-    //   email: 'jane@gm.com',
-    //   gender: 'Female',
-    //   age: 23,
-    //   notes: "Jane's notes",
-    // }; 
-
-   this.pouchdb.post(data,function(err: string, result: string) {
+    let formValid = this.userForm.valid;
+     this.pouchdb.post(data,function(err: string, result: string) {
+    if(!formValid){
+      swal("Form is not valid");
+    } else{
       if (!err) {
-        console.log('Successfully posted! {{networkStatus}}');
+        console.log('Successfully posted!');
         swal('Saved!', 'Saved Locally', 'success');
       }
-   })
+    }
+  });
 
-    // this.pouchdb.post(perigonpouch, function (err: string, result: string) {
-    //   if (!err) {
-    //     console.log('Successfully posted! {{networkStatus}}');
-    //     swal('Saved!', 'Saved Locally', 'success');
-    //   }
-    // });
+  if (this.userForm.invalid) {
+    // Iterate over the form controls
+    Object.keys(this.userForm.controls).forEach(field => {
+      const control = this.userForm.get(field);
+      // Check if the control is invalid
+      if (control?.invalid) {
+        // Clear the control value
+        control.reset();
+      }
+    });
+  } 
+
+  if(formValid){
+    this.userForm.reset();
+  }
+}
+
+  clearForm(): void {
+    this.userForm.reset();
   }
 
   DateSA() {
@@ -180,6 +135,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this._http.get("https://mocki.io/v1/3f963e4f-7f48-456c-859c-1d3939ea03a9").subscribe(res=>{
       this._http.get("https://mocki.io/v1/3f963e4f-7f48-456c-859c-1d3939ea03a9").subscribe(res=>
         {
+          const myArray = Object.values(res);
+          this.populateClinician(myArray);
           console.log("List Countries ",res);
         },
         err=>{
