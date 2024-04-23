@@ -30,8 +30,8 @@
         {{ error }}
       </p> -->
 
-      <button (click)="enCrypt()">Encrypt</button>
-      <button (click)="deCrypt()">Decrypt</button>
+      <!-- <button (click)="enCrypt()">Encrypt</button>
+      <button (click)="deCrypt()">Decrypt</button> -->
       <br>
       <button id="myBtn" class="btn-info" type='button' (click)="getPin()">Obtain Offline PIN</button>
 
@@ -49,4 +49,7 @@
     <!-- Trigger/Open The Modal -->
 
   </mat-card-content>
-</mat-card>
+  <img id="onlineImage" src="assets/online-image.jpg" alt="Online Image">
+<img id="offlineImage" src="assets/offline-image.jpg" alt="Offline Image">
+</mat-card> 
+
