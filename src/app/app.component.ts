@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subscription, fromEvent, merge, of } from 'rxjs';
 
 import PouchDB from 'pouchdb';
 import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
-import {
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -164,7 +164,9 @@ export class AppComponent implements OnInit, OnDestroy {
     // this._http.get("https://mocki.io/v1/3f963e4f-7f48-456c-859c-1d3939ea03a9").subscribe(res=>{
       this._http.get("https://mocki.io/v1/3f963e4f-7f48-456c-859c-1d3939ea03a9").subscribe(res=>
         {
-          console.log("List Countries ",res);
+          console.log("List Clinicians ",res);
+          const myArray = Object.values(res);
+          this.populateClinician(myArray);
         },
         err=>{
           console.error("Error ",err);
