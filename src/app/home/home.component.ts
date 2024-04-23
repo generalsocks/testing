@@ -9,6 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subscription, fromEvent, merge, of } from 'rxjs';
 
 import { AuthGuard } from '../auth.guard';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import PouchDB from 'pouchdb';
 import { RouterOutlet } from '@angular/router';
@@ -18,7 +19,7 @@ import swal from 'sweetalert';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule],
+  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule, NavbarComponent],
   providers: [AuthGuard],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
