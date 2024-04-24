@@ -11,3 +11,5 @@ export const routes: Routes = [
     {path: 'features', component: FeaturesComponent, canActivate: [AuthGuard]},
     {path: '**', redirectTo: 'login'}
 ];
+
+

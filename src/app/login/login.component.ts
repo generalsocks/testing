@@ -1,14 +1,14 @@
 import * as bcrypt from 'bcryptjs';
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
+import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NetworkService } from '../../services/network.service';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import swal from 'sweetalert';
@@ -16,7 +16,7 @@ import swal from 'sweetalert';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, ReactiveFormsModule, RouterModule, MatInputModule],
+  imports: [MatCardModule, MatFormFieldModule, ReactiveFormsModule, RouterModule, MatInputModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -29,7 +29,7 @@ form = new FormGroup({
 
 
 
-constructor(private router: Router, private cookieService: CookieService, private networkService: NetworkService) {
+constructor(private router: Router, private cookieService: CookieService, public networkService: NetworkService) {
 
 }
 public static  salt = 2; 
@@ -39,10 +39,15 @@ public static hash =  bcrypt.hash(LoginComponent.password,LoginComponent.salt)!;
 onSubmit(){
   console.log("Login clicked");
   console.log(this.form.value);
-  if(this.deCrypt(this.form.value.pin!) == true){
+  if (!this.networkService.networkStatus) {
+    if(this.deCrypt(this.form.value.pin!) == true){
+      this.router.navigate(['/home']);
+    }else{
+      swal("Wrong pin");
+    }
+  }
+  else {
     this.router.navigate(['/home']);
-  }else{
-    swal("Wrong pin");
   }
 }
 

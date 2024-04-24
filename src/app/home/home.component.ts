@@ -1,4 +1,4 @@
-import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,14 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Subscription, fromEvent, merge, of } from 'rxjs';
 
 import { AuthGuard } from '../auth.guard';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import PouchDB from 'pouchdb';
 import { RouterOutlet } from '@angular/router';
-import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
 
 @Component({
