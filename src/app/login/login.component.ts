@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NetworkService } from '../../services/network.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { TimerService } from '../../services/timer.service';
 import swal from 'sweetalert';
 
 @Component({
@@ -29,7 +30,7 @@ form = new FormGroup({
 
 
 
-constructor(private router: Router, private cookieService: CookieService, public networkService: NetworkService) {
+constructor(private router: Router, private cookieService: CookieService, public networkService: NetworkService, private timerService: TimerService) {
 
 }
 public static  salt = 2; 
@@ -77,6 +78,8 @@ var pin = Math.floor(1000 + Math.random() * 9000);
 swal( "Your pin is: " + pin, "Remember this pin for offline login");
 let pinEncrypted = this.enCrypt(pin.toString());
 localStorage.setItem('pin', pinEncrypted); 
+
+this.timerService.timer();
 
 }
 

@@ -9,11 +9,21 @@ PouchDB.plugin(PouchDBAdapterIDB);
   providedIn: 'root'
 })
 export class PouchdbService {
-  public db: PouchDB.Database
+  public apidb: PouchDB.Database;
+  public homedb: PouchDB.Database;
+
 
   constructor() {
-    this.db = new PouchDB('my_database', { adapter: 'idb' });
-   }
-    
+    this.apidb = new PouchDB('my_database', { adapter: 'idb' });
+    this.homedb = new PouchDB('home_database', { adapter: 'idb' }); 
   }
 
+     fetchAllDocs(db: PouchDB.Database) {
+      return db.allDocs({
+        include_docs: true,
+        attachments: true
+      }).then(result => {
+        return result.rows.map(row => row.doc);
+      });
+   }
+}

@@ -11,13 +11,15 @@ import { AuthGuard } from '../auth.guard';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import PouchDB from 'pouchdb';
+import { PouchdbService } from '../../services/pouchdb.service';
 import { RouterOutlet } from '@angular/router';
+import { StatusBoxComponent } from '../status-box/status-box.component';
 import swal from 'sweetalert';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule, NavbarComponent],
+  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule, NavbarComponent, StatusBoxComponent],
   providers: [AuthGuard],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
@@ -28,7 +30,7 @@ import swal from 'sweetalert';
 export class HomeComponent implements OnInit, OnDestroy {
   title = 'sw_pouch_app 3';
   datestamp = this.DateSA();
-  pouchdb!: any; //PouchDB.Database;
+  
   // networkStatus: boolean = false;
   // networkStatus$: Subscription = Subscription.EMPTY;
   
@@ -36,15 +38,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   dropDownData!:any;
 
   constructor(private _fb: FormBuilder,
-    private _http:HttpClient, private networkService: NetworkService
+    private _http:HttpClient, private networkService: NetworkService, private pouchDBService: PouchdbService
   ) {
-    this.pouchdb = new PouchDB('pouchform');
     this.networkService.networkStatus.valueOf; 
+
   }
 
   ngOnInit(): void {
     this.CreateForm();
     this.networkService.checkNetworkStatus();
+    console.log('Fetching All Docs');
+    this.fetchAllDocs();
     // this.checkNetworkStatus();
   }
 
@@ -52,6 +56,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.networkService.networkStatus$.unsubscribe();
   }
 
+  // stopTimer(){
+  //   this.status.resetTimer();
+  // }
+
+  fetchAllDocs() {
+    this.pouchDBService.homedb.allDocs({
+      include_docs: true,
+      attachments: true
+    }).then(function (result: any) {
+      console.log(result);
+      console.log("Row Count:", result.rows.length);
+    }).catch(function (err: any) {
+      console.log(err);
+    });
+ }
   
 
   //create form model
@@ -71,16 +90,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     const data =  this.userForm.value;
     console.log(data);
     let formValid = this.userForm.valid;
-     this.pouchdb.post(data,function(err: string, result: string) {
-    if(!formValid){
-      swal("Form is not valid");
-    } else{
-      if (!err) {
-        console.log('Successfully posted!');
-        swal('Saved!', 'Saved Locally', 'success');
+    this.pouchDBService.homedb.post(data).then(
+      (response: any) => {
+        if (!formValid) {
+          swal('Form is not valid');
+        } else {
+          console.log('Successfully posted!');
+          swal('Saved!', 'Saved Locally', 'success');
+        }
+      },
+      (error: any) => {
+        console.error(error);
       }
-    }
-  });
+    );
 
   if (this.userForm.invalid) {
     // Iterate over the form controls
@@ -96,7 +118,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   if(formValid){
     this.userForm.reset();
-  }
+  } 
+
+ 
 }
 
   clearForm(): void {
@@ -183,4 +207,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     optionElement.textContent = 'None loaded'; // Set the visible text for the option
     selectElement?.appendChild(optionElement); // Append the option to the select
   }
+
+  
+  
 }
