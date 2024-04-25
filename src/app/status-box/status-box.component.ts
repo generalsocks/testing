@@ -25,8 +25,11 @@ ngOnInit(): void {
     console.log("Status Box");
     this.countIn = res.length;
   console.log(res.length); 
-  this.time = this.timerService.hours + ':' + this.timerService.minutes + ':' + this.timerService.seconds;
   });
+  setInterval(() => {
+    this.time = this.timerService.hours + ':' + this.timerService.minutes + ':' + this.timerService.seconds;
+  }, 1000);
+  //this.time = this.timerService.hours + ':' + this.timerService.minutes + ':' + this.timerService.seconds;
 }
 
 

@@ -8,6 +8,7 @@ import {
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from '../auth.guard';
+import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import PouchDB from 'pouchdb';
@@ -19,7 +20,7 @@ import swal from 'sweetalert';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule, NavbarComponent, StatusBoxComponent],
+  imports: [RouterOutlet, ReactiveFormsModule, HttpClientModule, NavbarComponent, StatusBoxComponent, CommonModule],
   providers: [AuthGuard],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   dropDownData!:any;
 
   constructor(private _fb: FormBuilder,
-    private _http:HttpClient, private networkService: NetworkService, private pouchDBService: PouchdbService
+    private _http:HttpClient, public networkService: NetworkService, private pouchDBService: PouchdbService
   ) {
     this.networkService.networkStatus.valueOf; 
 

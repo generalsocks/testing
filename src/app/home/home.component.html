@@ -7,7 +7,8 @@
             <h4>Perigon Away - Offline Proof of Concept</h4><br>
         </div>
         <div class="col">
-            <app-status-box></app-status-box>
+            <div *ngIf="!networkService.networkStatus"><app-status-box></app-status-box></div>
+            
         </div>
     </div>
    
