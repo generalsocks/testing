@@ -11,8 +11,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent}, 
     {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, 
     {path: 'features', component: FeaturesComponent, canActivate: [AuthGuard]},
-    {path: 'syncceremony', component: SyncCeremonyComponent, canActivate: [AuthGuard]},
-    {path: 'apis', component: ApisComponent, canActivate: [AuthGuard]}, 
+    {path: 'sync-ceremony', component: SyncCeremonyComponent, canActivate: [AuthGuard]},
     {path: '**', redirectTo: 'login'}
 ];
 
