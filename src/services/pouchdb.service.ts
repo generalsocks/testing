@@ -26,4 +26,15 @@ export class PouchdbService {
         return result.rows.map(row => row.doc);
       });
    }
+
+
+  bulkInsert(db: PouchDB.Database, docs: any[]) {
+    //if 
+    db.bulkDocs(docs).then(function (result) {
+      console.log(result);
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+
 }

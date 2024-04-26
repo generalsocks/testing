@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NetworkService } from '../../services/network.service';
+import { PouchdbService } from '../../services/pouchdb.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { TimerService } from '../../services/timer.service';
@@ -30,7 +31,7 @@ form = new FormGroup({
 
 
 
-constructor(private router: Router, private cookieService: CookieService, public networkService: NetworkService, private timerService: TimerService) {
+constructor(private router: Router, private cookieService: CookieService, public networkService: NetworkService, private timerService: TimerService, public pouchDBService: PouchdbService) {
 
 }
 public static  salt = 2; 
@@ -81,6 +82,14 @@ localStorage.setItem('pin', pinEncrypted);
 
 this.timerService.timer();
 
+}
+
+initDB(){
+  this.pouchDBService.apidb.destroy().then(function () {
+    console.log("DB Destroyed");
+  }).catch(function (err) {
+    console.log(err);
+  }); 
 }
 
 } 

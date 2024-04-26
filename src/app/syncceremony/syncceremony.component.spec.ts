@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SyncCeremonyComponent } from './sync-ceremony.component';
+import { SyncCeremonyComponent } from './syncceremony.component';
 
 describe('SyncCeremonyComponent', () => {
   let component: SyncCeremonyComponent;

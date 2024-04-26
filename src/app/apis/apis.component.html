@@ -21,8 +21,11 @@
                 </div>
                 <div class="col-lg-auto">
                     <select class="form-control">
-                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                        <option value="Title" >Name</option> 
+                        <option value="Body">Username</option>
+                        <option value="Body">Email</option>
                     </select>
+                   
                 </div>
                 <div class="col-lg-auto">
                     <div class="form-floating">
@@ -34,21 +37,35 @@
             <div class="row">
                 <div class="col-lg-2"><button type="button" class="btn btn-primary">Insert</button></div>
                 <div class="col-lg-auto">
-                    <select class="form-control">
-                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
-                    </select>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Name</label>
+                          </div>
+                    </div>
                 </div>
                 <div class="col-lg-auto">
-                    <select class="form-control">
-                        <option *ngFor="let post of posts" [value]="post.title">{{post.title}}</option>
-                    </select>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Username</label>
+                          </div>
+                    </div>
                 </div>
                 <div class="col-lg-auto">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                          </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-auto">
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                         <label for="floatingTextarea">Insert Body Here</label>
                       </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col-lg-2"><button type="button" class="btn btn-primary">Delete</button></div>
@@ -68,15 +85,17 @@
             <thead>
                 <tr>
                   <th scope="col">id</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Body</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
                 </tr>
               </thead>
             <tbody>
                 <tr *ngFor="let post of posts">
                     <th scope="row">{{ post.id }}</th>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.body }}</td>
+                    <td>{{ post.name }}</td>
+                    <td>{{ post.username }}</td>
+                    <td>{{ post.email}}</td>
                   </tr>
             </tbody>
         </table>
@@ -90,6 +109,7 @@
         </div>
 
     </div>
-   </div>
+   </div> 
+
 </div>
 
