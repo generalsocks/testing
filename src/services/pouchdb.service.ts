@@ -18,8 +18,8 @@ export class PouchdbService {
     this.homedb = new PouchDB('home_database', { adapter: 'idb' }); 
   }
 
-     fetchAllDocs(db: PouchDB.Database) {
-      return db.allDocs({
+    async fetchAllDocs(db: PouchDB.Database) {
+      return await db.allDocs({
         include_docs: true,
         attachments: true
       }).then(result => {
@@ -31,7 +31,7 @@ export class PouchdbService {
   bulkInsert(db: PouchDB.Database, docs: any[]) {
     //if 
     db.bulkDocs(docs).then(function (result) {
-      console.log(result);
+      console.log("Bulk insert is successfully");
     }).catch(function (err) {
       console.log(err);
     });
