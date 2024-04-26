@@ -2,12 +2,94 @@
 <div class="mt-4">
     <div class="row">
         <div class="col-8">
-            <h4>API Testing</h4><br>
+            <h4 style="margin-left: 10%;">API Testing</h4><br>
+
         </div>
         <div class="col">
             <div *ngIf="!networkService.networkStatus"><app-status-box></app-status-box></div>
             
         </div>
+    </div> 
+    <div class="row">
+        <div class="container left">
+            <div class="row">
+                <div class="col-lg-2"><button type="button" class="btn btn-primary">Update</button></div>
+                <div class="col-lg-auto">
+                    <select class="form-control">
+                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-auto">
+                    <select class="form-control">
+                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-auto">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea">Enter Text Here</label>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"><button type="button" class="btn btn-primary">Insert</button></div>
+                <div class="col-lg-auto">
+                    <select class="form-control">
+                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-auto">
+                    <select class="form-control">
+                        <option *ngFor="let post of posts" [value]="post.title">{{post.title}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-auto">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea">Insert Body Here</label>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"><button type="button" class="btn btn-primary">Delete</button></div>
+                <div class="col-lg-auto">
+                    <select class="form-control">
+                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                    </select>
+                </div>
+            </div>
+                           
+        </div>
     </div>
+   <div class="container down">
+    <div class="row">
+        <h5>Getting All</h5>
+        <table class="table table-striped" >
+            <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Body</th>
+                </tr>
+              </thead>
+            <tbody>
+                <tr *ngFor="let post of posts">
+                    <th scope="row">{{ post.id }}</th>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.body }}</td>
+                  </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Post Id</label>
+              </div>
+        </div>
+
+    </div>
+   </div>
 </div>
 
