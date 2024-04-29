@@ -16,7 +16,7 @@
                 <div class="col-lg-2"><button type="button" class="btn btn-primary">Update</button></div>
                 <div class="col-lg-auto">
                     <select class="form-control">
-                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                        <option *ngFor="let post of posts" [value]="post.id">{{post._id}}</option>
                     </select>
                 </div>
                 <div class="col-lg-auto">
@@ -71,7 +71,7 @@
                 <div class="col-lg-2"><button type="button" class="btn btn-primary">Delete</button></div>
                 <div class="col-lg-auto">
                     <select class="form-control">
-                        <option *ngFor="let post of posts" [value]="post.id">{{post.id}}</option>
+                        <option *ngFor="let post of posts" [value]="post.id">{{post._id}}</option>
                     </select>
                 </div>
             </div>
@@ -80,7 +80,7 @@
     </div>
    <div class="container down">
     <div class="row">
-        <h5>Getting All</h5>
+        <h5>Getting All Records</h5>
         <table class="table table-striped" >
             <thead>
                 <tr>
@@ -92,7 +92,7 @@
               </thead>
             <tbody>
                 <tr *ngFor="let post of posts">
-                    <th scope="row">{{ post.id }}</th>
+                    <th scope="row">{{ post._id }}</th>
                     <td>{{ post.name }}</td>
                     <td>{{ post.username }}</td>
                     <td>{{ post.email}}</td>
@@ -101,15 +101,44 @@
         </table>
     </div>
     <div class="row">
+    <h5>Getting Single Record</h5>
+    <form [formGroup]="searchForm">
         <div class="col-4">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Post Id</label>
+                <input type="text" formControlName="searchInput" class="formControl" placeholder="Post ID">
+                
               </div>
+        </div> 
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="findPost(this.searchForm.controls.searchInput.value!)">Find Post</button>  
         </div>
+    </form>
+        
+    <table *ngIf="docs.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of docs">
+            <td>{{doc._id}}</td>
+            <td>{{doc.name}}</td>
+            <td>{{doc.username}}</td>
+            <td>{{doc.email}}</td>
+          </tr>
+        </tbody>
+     </table>
 
+     
     </div>
    </div> 
-
+  <div class="container"style="margin-top: 20px">
+    <img id="onlineImage" src="assets/online-image.jpg" alt="Online Image" width="144px" height="48px">
+    <img  id="offlineImage" src="assets/offline-image.jpg" alt="Offline Image" width="144px" height="48px">
+  </div>
 </div>
 

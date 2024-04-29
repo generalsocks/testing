@@ -11,7 +11,6 @@ import { AuthGuard } from '../auth.guard';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
-import PouchDB from 'pouchdb';
 import { PouchdbService } from '../../services/pouchdb.service';
 import { RouterOutlet } from '@angular/router';
 import { StatusBoxComponent } from '../status-box/status-box.component';

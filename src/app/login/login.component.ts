@@ -79,7 +79,9 @@ var pin = Math.floor(1000 + Math.random() * 9000);
 swal( "Your pin is: " + pin, "Remember this pin for offline login");
 let pinEncrypted = this.enCrypt(pin.toString());
 localStorage.setItem('pin', pinEncrypted); 
-
+// api call 
+  // inserting into couch 
+  // replication into pouch 
 this.timerService.timer();
 
 }

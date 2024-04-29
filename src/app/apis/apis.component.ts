@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { ApiDataService } from '../../services/api-data.service';
 import { CommonModule } from '@angular/common';
@@ -15,24 +16,37 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
     NavbarComponent,
     StatusBoxComponent,
     CommonModule,
-    HttpClientModule,
+    HttpClientModule, 
+    ReactiveFormsModule
   ],
-  providers: [ApiDataService],
+  providers: [ApiDataService, NetworkService],
   templateUrl: './apis.component.html',
   styleUrl: './apis.component.css',
 })
 export class ApisComponent implements OnInit {
-  posts: any[] = [];
+  posts: any[] = []; 
+  docs: any[] = [];
+  searchForm = new FormGroup({
+    searchInput: new FormControl('')
+ });
+ 
+
   constructor(
     public networkService: NetworkService,
     private apiDataService: ApiDataService,
-    public pouchdbService: PouchdbService
+    public pouchdbService: PouchdbService, 
+    public networkStatus: NetworkService
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.getData();
+    this.networkService.checkNetworkStatus();
   }
 
+  ngOnDestroy(): void {
+    this.networkService.networkStatus$.unsubscribe();
+    this.networkService.networkStatus.valueOf;
+  }
   async getData() {
     (await this.apiDataService.getPosts()).subscribe(async (posts) => {
       this.posts = posts;
@@ -46,5 +60,18 @@ export class ApisComponent implements OnInit {
           console.log(err);
         });
     });
-  }
+  } 
+
+  async findPost(id: string) {
+    console.log("Searching for post with id:", id);
+    const searchValue = this.searchForm.get('searchInput')!.value;
+   this.pouchdbService.findDocById(this.pouchdbService.apidb, id).then(result => {
+       this.docs = result;
+   }).catch(err => {
+      console.log(err);
+   });
+  } 
+
+  
+ 
 }
