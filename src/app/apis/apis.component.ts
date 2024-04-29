@@ -8,6 +8,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import { PouchdbService } from '../../services/pouchdb.service';
 import { StatusBoxComponent } from '../status-box/status-box.component';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-apis',
@@ -17,7 +18,8 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
     StatusBoxComponent,
     CommonModule,
     HttpClientModule, 
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    FormsModule, 
     FormsModule
   ],
   providers: [ApiDataService, NetworkService],
@@ -27,6 +29,7 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
 export class ApisComponent implements OnInit {
   posts: any[] = []; 
   docs: any[] = [];
+  selUserToDelete = '';
   selectedIdForUpdate = '';
   selectedFieldForUpdate = '';
   searchForm = new FormGroup({
@@ -75,6 +78,15 @@ export class ApisComponent implements OnInit {
    });
   } 
 
+  deleteUser(id: string){
+    if (id == '') {
+      swal("no record was selected for deletion");
+    } 
+    else {
+      console.log("Deleting post with id:", id);
+      this.pouchdbService.DB_DeleteById(this.pouchdbService.apidb, id);
+    } 
+  }
   async updatePost(id: string, field: string, value: string) {
     console.log("Updating the record with id:", id); 
     // this.pouchdbService.DB_UpdateById(this.pouchdbService.apidb, id, field, value);

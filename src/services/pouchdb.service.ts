@@ -88,6 +88,32 @@ export class PouchdbService {
   async DB_Insert(db: PouchDB.Database, data: any){
     await db.post(data);
   }
+
+  async DB_DeleteById(db: PouchDB.Database, id: string) 
+  {
+     //for deleting record you need to call get method based on id (to get revision id)
+    let document = await db.get(id);
+   
+    const deletedDoc = {
+      ...document,
+      _rev: document._rev, // Include the current revision number
+      _id: document._id, // Incl
+    };
+ 
+    db.remove(deletedDoc).then(res=>{
+      console.log(res);
+    }).catch(err=>{
+      console.error("Error while deleting data ",err);
+    })
+
+    //db.get('mydoc').then(function (doc) {
+    //  return db.remove(doc._id, doc._rev);
+    // }).catch(function (err) {
+    //   // Handle any errors
+    // });
+  }
+
+
    
    
   // bulkInsert(db: PouchDB.Database, docs: any[]) {
