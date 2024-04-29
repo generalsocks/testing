@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ApiDataService } from '../../services/api-data.service';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { NetworkService } from '../../services/network.service';
 import { PouchdbService } from '../../services/pouchdb.service';
 import { StatusBoxComponent } from '../status-box/status-box.component';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-apis',
@@ -17,7 +18,8 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
     StatusBoxComponent,
     CommonModule,
     HttpClientModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [ApiDataService, NetworkService],
   templateUrl: './apis.component.html',
@@ -26,6 +28,7 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
 export class ApisComponent implements OnInit {
   posts: any[] = []; 
   docs: any[] = [];
+  selUserToDelete = '';
   searchForm = new FormGroup({
     searchInput: new FormControl('')
  });
@@ -72,6 +75,15 @@ export class ApisComponent implements OnInit {
    });
   } 
 
+  deleteUser(id: string){
+    if (id == '') {
+      swal("no record was selected for deletion");
+    } 
+    else {
+      console.log("Deleting post with id:", id);
+      this.pouchdbService.DB_DeleteById(this.pouchdbService.apidb, id);
+    } 
+  }
   
  
 }
