@@ -32,6 +32,7 @@ export class ApisComponent implements OnInit {
   selUserToDelete = '';
   selectedIdForUpdate = '';
   selectedFieldForUpdate = '';
+  textForUpdate = '';
   searchForm = new FormGroup({
     searchInput: new FormControl('')
  });
@@ -87,9 +88,25 @@ export class ApisComponent implements OnInit {
       this.pouchdbService.DB_DeleteById(this.pouchdbService.apidb, id);
     } 
   }
-  async updatePost(id: string, field: string, value: string) {
+  async updatePost(id: string, field: string, newValue: string) {
     console.log("Updating the record with id:", id); 
-    // this.pouchdbService.DB_UpdateById(this.pouchdbService.apidb, id, field, value);
+    console.log("Field to update:", field);
+    let changedData = {};
+    if(field == 'name') {
+       changedData = {
+        name: newValue,
+      }
+    }else if (field == 'username'){
+       changedData = {
+        username: newValue,
+      }
+    } else {
+       changedData = {
+        email: newValue,
+      }
+    }
+   
+     this.pouchdbService.DB_UpdateById(this.pouchdbService.apidb, id, changedData);
   }
  
 }
