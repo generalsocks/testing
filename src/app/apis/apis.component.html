@@ -16,13 +16,13 @@
                 <div class="col-lg-2"><button type="button" class="btn btn-primary" (click)="updatePost( selectedIdForUpdate ,selectedFieldForUpdate, textForUpdate)">Update</button></div>
                 <div class="col-lg-auto">
                     <select [(ngModel)]="selectedIdForUpdate" >
-                        <option value="">Select ID</option>
+                        <option value="0">Select ID</option>
                         <option *ngFor="let post of posts" [value]="post._id">{{post._id}}</option>
                     </select>
                 </div>
                 <div class="col-lg-auto">
                     <select [(ngModel)]="selectedFieldForUpdate" >
-                        <option value="">Select Field</option>
+                        <option value="0">Select Field</option>
                         <option value="name" >Name</option> 
                         <option value="username">Username</option>
                         <option value="email">Email</option>
@@ -36,43 +36,67 @@
                       </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-2"><button type="button" class="btn btn-primary">Insert</button></div>
-                <div class="col-lg-auto">
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Name</label>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-lg-auto">
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Username</label>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-lg-auto">
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email</label>
-                          </div>
-                    </div>
-                </div>
-                <!-- <div class="col-lg-auto">
+            
+      <form novalidate  [formGroup]="userForm">
+        <div class="row">
+          <div class="col-lg-2">
+            <button type="button" class="btn btn-primary" (click)="InsertData()">Insert</button>
+          </div>
+          <div class="col-lg-2">
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                  formControlName="name"
+                />
+                <label for="floatingInput">Name<span style="color: red;">*</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                  formControlName="username"
+                />
+                <label for="floatingInput">Username<span style="color: red;">*</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                  formControlName="email"
+                />
+                <label for="floatingInput">Email<span style="color: red;">*</span></label>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-auto">
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                         <label for="floatingTextarea">Insert Body Here</label>
                       </div>
                 </div> -->
-            </div>
+        </div>
+      </form>
             <div class="row">
                 <div class="col-lg-2"><button type="button" class="btn btn-primary" (click)="deleteUser(selUserToDelete)">Delete</button></div>
                 <div class="col-lg-auto">
-                    <select [(ngModel)]="selUserToDelete" class="form-control">
+                    <select [(ngModel)]="selUserToDelete">
+                        <option value="0">Select ID</option> 
                         <option *ngFor="let post of posts" [value]="post._id">{{post._id}}</option>
                     </select>
                 </div>
