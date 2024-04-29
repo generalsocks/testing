@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ApiDataService } from '../../services/api-data.service';
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,8 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
     StatusBoxComponent,
     CommonModule,
     HttpClientModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    FormsModule
   ],
   providers: [ApiDataService, NetworkService],
   templateUrl: './apis.component.html',
@@ -26,6 +27,8 @@ import { StatusBoxComponent } from '../status-box/status-box.component';
 export class ApisComponent implements OnInit {
   posts: any[] = []; 
   docs: any[] = [];
+  selectedIdForUpdate = '';
+  selectedFieldForUpdate = '';
   searchForm = new FormGroup({
     searchInput: new FormControl('')
  });
@@ -72,6 +75,9 @@ export class ApisComponent implements OnInit {
    });
   } 
 
-  
+  async updatePost(id: string, field: string, value: string) {
+    console.log("Updating the record with id:", id); 
+    // this.pouchdbService.DB_UpdateById(this.pouchdbService.apidb, id, field, value);
+  }
  
 }

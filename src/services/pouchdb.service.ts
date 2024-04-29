@@ -65,7 +65,7 @@ export class PouchdbService {
     }
    }
 
-   async DB_UpdateById(db: PouchDB.Database, id: string, newData: any, doc: any) 
+   async DB_UpdateById(db: PouchDB.Database, id: string, newData: any) 
   {
  
     //for updating record you need to call get method based on id
@@ -74,7 +74,7 @@ export class PouchdbService {
     const updatedDoc = {
       ...document,
       ...newData,
-      _rev: doc._rev, // Include the current revision number
+      _rev: document._rev, // Include the current revision number
  
     };
  
